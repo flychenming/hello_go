@@ -6,6 +6,8 @@ import (
 	"html/template"
 	"math/rand"
 	"net/http"
+	"os"
+	"path/filepath"
 )
 
 func getSub() []string {
@@ -45,7 +47,7 @@ func getSub() []string {
 func main() {
 	r := gin.Default()
 	r.SetFuncMap(template.FuncMap{"mod": func(i, j int) bool { return i%j == 0 }, "add": func(i, j int) int { return i + j }})
-	r.LoadHTMLGlob("templates/*")
+	r.LoadHTMLGlob(filepath.Join(os.Getenv("GOPATH"),"src/templates/*"))
 	v1 := r.Group("")
 	{
 		v1.GET("/", func(c *gin.Context) {
