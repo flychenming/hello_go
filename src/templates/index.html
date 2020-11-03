@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.title}}</title></head>
+<body>
+<h1 align="center">{{.title}}</h1>
+<table align="center" width="900px" border="0" style="border-collapse:separate; border-spacing:0px 20px;">
+    <tr>
+        <th width="30%" align="left">练习一</th>
+        <th width="30%" align="left">练习二</th>
+        <th width="30%" align="left">练习三</th>
+    </tr>
+    <tr>
+    {{$index := 0}}
+    {{ range .items }}
+        {{- if (mod $index 3)}}
+    </tr><tr>
+        {{- end}}
+        <td><font size="6">{{.}}</font></td>
+        {{$index = (add $index 1)}}
+    {{end}}
+    </tr>
+</table>
+</body>
+</html>
