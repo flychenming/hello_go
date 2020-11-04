@@ -26,13 +26,12 @@ func getSub() []string {
 		} else {
 			two = rand.Intn(one + 1)
 		}
-		var fm = "%-2d %s %-2d ="
+		var fm = "%-2d %s %-2d"
 		var r = fmt.Sprintf(fm, one, op, two)
-		//var r = strconv.Itoa(one) + " " + op + " " + strconv.Itoa(two) + " = "
 		_, ok := m[r]
 		if !ok {
 			m[r] = struct{}{}
-			if len(m) > 50 {
+			if len(m) > 29 {
 				break
 			}
 		}
@@ -47,7 +46,7 @@ func getSub() []string {
 func main() {
 	r := gin.Default()
 	r.SetFuncMap(template.FuncMap{"mod": func(i, j int) bool { return i%j == 0 }, "add": func(i, j int) int { return i + j }})
-	r.LoadHTMLGlob(filepath.Join(os.Getenv("GOPATH"),"src/templates/*"))
+	r.LoadHTMLGlob(filepath.Join(os.Getenv("GOPATH"), "src/templates/*"))
 	v1 := r.Group("")
 	{
 		v1.GET("/", func(c *gin.Context) {

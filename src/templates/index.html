@@ -4,23 +4,29 @@
     <meta charset="UTF-8">
     <title>{{.title}}</title></head>
 <body>
-<h1 align="center">{{.title}}</h1>
-<table align="center" width="900px" border="0" style="border-collapse:separate; border-spacing:0px 20px;">
-    <tr>
-        <th width="30%" align="left">练习一</th>
-        <th width="30%" align="left">练习二</th>
-        <th width="30%" align="left">练习三</th>
-    </tr>
-    <tr>
-    {{$index := 0}}
-    {{ range .items }}
-        {{- if (mod $index 3)}}
-    </tr><tr>
-        {{- end}}
-        <td><font size="6">{{.}}</font></td>
-        {{$index = (add $index 1)}}
-    {{end}}
-    </tr>
-</table>
+<h1 style="text-align: center">{{.title}}</h1>
+<a href="javascript:window.print()">打印</a>
+<div style="align-content: center">
+    <table style="margin-left: auto;
+  margin-right: auto;width: 900px; border: 0; white-space: pre;border-collapse:separate; border-spacing:0 25px;">
+        <tr>
+            <th style="width: 30%;text-align: left">练习一</th>
+            <th style="width: 30%;text-align: left">练习二</th>
+            <th style="width: 30%;text-align: left">练习三</th>
+        </tr>
+        <tr>
+            {{$index := 0}}
+            {{ range .items }}
+            {{- if (mod $index 3)}}
+        </tr>
+        <tr>
+            {{- end}}
+            <td><span style="display:-moz-inline-box;  display:inline-block;width:140px;font-size: 36px; text-align: left">{{.}} </span><span
+                        style="display:-moz-inline-box;  display:inline-block;width:40px;font-size: 36px;">=</span></td>
+            {{$index = (add $index 1)}}
+            {{end}}
+        </tr>
+    </table>
+</div>
 </body>
 </html>
