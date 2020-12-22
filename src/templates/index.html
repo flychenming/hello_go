@@ -5,28 +5,31 @@
     <title>{{.title}}</title></head>
 <body>
 <h1 style="text-align: center">{{.title}}</h1>
-<a href="javascript:window.print()">打印</a>
 <div style="align-content: center">
-    <table style="margin-left: auto;
-  margin-right: auto;width: 900px; border: 0; white-space: pre;border-collapse:separate; border-spacing:0 25px;">
-        <tr>
-            <th style="width: 30%;text-align: left">练习一</th>
-            <th style="width: 30%;text-align: left">练习二</th>
-            <th style="width: 30%;text-align: left">练习三</th>
-        </tr>
-        <tr>
-            {{$index := 0}}
-            {{ range .items }}
-            {{- if (mod $index 3)}}
-        </tr>
-        <tr>
-            {{- end}}
-            <td><span style="display:-moz-inline-box;  display:inline-block;width:140px;font-size: 36px; text-align: left">{{.}} </span><span
-                        style="display:-moz-inline-box;  display:inline-block;width:40px;font-size: 36px;">=</span></td>
-            {{$index = (add $index 1)}}
+    <form action="/my" style="align-content: center">
+        <label for="difficulty"> 请选择难度：</label>
+        <select id="difficulty" name="difficulty">
+            {{range $i, $v := .difficulty}}
+            <option value="{{$i}}">{{$v}}</option>
             {{end}}
-        </tr>
-    </table>
+        </select>
+        <br/>
+        <label for="max">选择最大范围：</label>
+        <select id="max" name="max">
+            {{range $i := .max}}
+            <option value="{{$i}}">{{$i}}</option>
+            {{end}}
+        </select>
+        <br/>
+        <label for="no"> 题量：</label>
+        <select id="no" name="no">
+            {{range $i := .no}}
+            <option value="{{$i}}">{{$i}}</option>
+            {{end}}
+        </select>
+        <br/>
+        <button type="submit" style="align-content: center">提交</button>
+    </form>
 </div>
 </body>
 </html>
