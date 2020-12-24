@@ -1,18 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>{{.title}}</title></head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{.title}}</title>
+    <style>
+        /*横向*/
+        .a4-end-wise {
+            margin: 0 auto;
+            width: 1066px;
+            height: 1550px;
+            border: 1px #ccc solid;
+            overflow: hidden;
+            padding: 0;
+            word-break: break-all;
+        }
+
+        /*纵向*/
+        .a4-broad-wise {
+            margin: 0 auto;
+            width: 1567px;
+            height: 1073px;
+            border: 1px #000 solid;
+            overflow: hidden;
+            padding: 0;
+            word-break: break-all;
+        }
+
+        /*打印按钮*/
+        .print {
+            position: fixed;
+            top: 1%;
+            right: 10%;
+        }
+
+        /*返回按钮*/
+        .back {
+            position: fixed;
+            top: 1%;
+            left: 10%;
+        }
+
+        /*返回按钮*/
+        .reload {
+            position: fixed;
+            top: 1%;
+            left: 12%;
+        }
+
+        .table {
+            margin-left: 20px;
+            margin-right: 20px;
+            width: 100%;
+            border: 0;
+            white-space: pre;
+            border-collapse: separate;
+            border-spacing: 0 25px;
+        }
+
+        .table-th {
+            width: 33%;
+            text-align: left;
+        }
+
+        .table-span {
+            display: -moz-inline-box;
+            display: inline-block;
+            width: 140px;
+            font-size: 28px;
+            text-align: left;
+        }
+    </style>
+</head>
 <body>
-<h1 style="text-align: center">{{.title}}</h1>
-<a href="javascript:window.print()">打印</a>
-<div style="align-content: center">
-    <table style="margin-left: auto;
-  margin-right: auto;width: 900px; border: 0; white-space: pre;border-collapse:separate; border-spacing:0 25px;">
+
+<a class="back" href="/">返回</a>
+<a class="reload" href="javascript:" onclick="window.location.reload()">刷新</a>
+<a class="print" href="javascript:" onclick="preview();">打印</a>
+
+<!--start-print-->
+<div class="container a4-end-wise">
+    <table class="table">
         <tr>
-            <th style="width: 33%;text-align: left">练习一</th>
-            <th style="width: 33%;text-align: left">练习二</th>
-            <th style="width: 33%;text-align: left">练习三</th>
+            <th class="table-th">练习一</th>
+            <th class="table-th">练习二</th>
+            <th class="table-th">练习三</th>
         </tr>
         <tr>
             {{$index := 0}}
@@ -21,11 +94,28 @@
         </tr>
         <tr>
             {{- end}}
-            <td><span style="display:-moz-inline-box;  display:inline-block;width:140px;font-size: 28px; text-align: left">{{.}} </span></td>
+            <td><span class="table-span">{{.}} </span>
+            </td>
             {{$index = (add $index 1)}}
             {{end}}
         </tr>
     </table>
 </div>
+<!--end-print-->
+
+<script>
+    /**
+     * [打印]
+     * @return {[type]} [description]
+     */
+    function preview() {
+        //获取当前页的html代码
+        bd_html = window.document.body.innerHTML
+        window.document.body.innerHTML = document.getElementsByClassName('a4-end-wise')[0].outerHTML;
+        window.print();
+        window.document.body.innerHTML = bd_html;
+    }
+</script>
+
 </body>
 </html>
