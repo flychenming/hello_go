@@ -9,39 +9,6 @@ import (
 	"strconv"
 )
 
-func getSub() []string {
-	var m = make(map[string]struct{})
-	for ; ; {
-		var op string
-		if rand.Intn(2) == 0 {
-			op = "+"
-		} else {
-			op = "-"
-		}
-		var one = rand.Intn(20)
-		var two int
-		if "+" == op {
-			two = rand.Intn(20 - one)
-		} else {
-			two = rand.Intn(one + 1)
-		}
-		var fm = "%-2d %s %-2d"
-		var r = fmt.Sprintf(fm, one, op, two)
-		_, ok := m[r]
-		if !ok {
-			m[r] = struct{}{}
-			if len(m) > 29 {
-				break
-			}
-		}
-	}
-	s := make([]string, 0, len(m))
-	for k, _ := range m {
-		s = append(s, k)
-	}
-	return s
-}
-
 func getSubNew(difficulty, max, no string) []string {
 	noi, _ := strconv.Atoi(no)
 	myMax, _ := strconv.Atoi(max)
@@ -58,8 +25,11 @@ func getSubNew(difficulty, max, no string) []string {
 		}
 	}
 	s := make([]string, 0, len(m))
+	var c = '①'
+	var count rune = 0
 	for k, _ := range m {
-		s = append(s, k)
+		s = append(s, string(count/3+c)+" "+k)
+		count += 1
 	}
 	return s
 }
@@ -124,6 +94,7 @@ func main() {
 	r := gin.Default()
 	r.SetFuncMap(template.FuncMap{"mod": func(i, j int) bool { return i%j == 0 }, "add": func(i, j int) int { return i + j }})
 	r.LoadHTMLGlob("src/templates/*")
+	r.Static("/static/css", "src/static/css")
 	//r.LoadHTMLGlob(filepath.Join(os.Getenv("GOPATH"), "src/templates/*"))
 	v1 := r.Group("")
 	{
@@ -133,22 +104,21 @@ func main() {
 				"difficulty": map[int]string{1: "单一加", 2: "单一减", 3: "单一加减混合", 4: "2连加", 5: "2连减", 6: "2连混合"},
 				"max":        []int{10, 20, 30, 50, 100},
 				"no":         []int{30, 50},
-				"items":      getSub(),
-			})
-		})
-		v1.GET("/easy", func(c *gin.Context) {
-			c.HTML(200, "easy.html", gin.H{
-				"title": "练习",
-				"items": getSub(),
+				"pages":      []int{1, 3, 5, 8, 10},
 			})
 		})
 		v1.GET("/my", func(c *gin.Context) {
 			difficulty := c.Query("difficulty")
 			max := c.Query("max")
 			no := c.Query("no")
+			page, _ := strconv.Atoi(c.Query("page"))
+			s := make([][]string, 0, page)
+			for i := 0; i < page; i++ {
+				s = append(s, getSubNew(difficulty, max, no))
+			}
 			c.HTML(200, "my.html", gin.H{
 				"title": "练习",
-				"items": getSubNew(difficulty, max, no),
+				"items": s,
 			})
 		})
 	}

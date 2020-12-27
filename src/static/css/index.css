@@ -1,0 +1,79 @@
+/*横向*/
+.a4-end-wise {
+    margin: 0 auto;
+    width: 1066px;
+    height: 1550px;
+    border: 1px #ccc solid;
+    overflow: hidden;
+    padding: 0;
+    word-break: break-all;
+}
+
+/*纵向*/
+.a4-broad-wise {
+    margin: 0 auto;
+    width: 1567px;
+    height: 1073px;
+    border: 1px #000 solid;
+    overflow: hidden;
+    padding: 0;
+    word-break: break-all;
+}
+
+/*打印按钮*/
+.print {
+    position: fixed;
+    top: 1%;
+    left: 14%;
+}
+
+/*返回按钮*/
+.back {
+    position: fixed;
+    top: 1%;
+    left: 10%;
+}
+
+/*返回按钮*/
+.reload {
+    position: fixed;
+    top: 1%;
+    left: 12%;
+}
+
+.table {
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 100%;
+    border: 0;
+    white-space: pre;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
+
+table, table tr th, table tr td {
+    border: 0 solid #0094ff;
+}
+
+.table-th {
+    width: 33%;
+    text-align: left;
+}
+
+.table-span {
+    align-content: center;
+    display: -moz-inline-box;
+    display: inline-block;
+    width: 140px;
+    font-size: 40px;
+    text-align: left;
+}
+
+.table-th-span {
+    align-content: center;
+    display: -moz-inline-box;
+    display: inline-block;
+    width: 140px;
+    font-size: 20px;
+    text-align: center;
+}

@@ -5,91 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{.title}}</title>
-    <style>
-        /*横向*/
-        .a4-end-wise {
-            margin: 0 auto;
-            width: 1066px;
-            height: 1550px;
-            border: 1px #ccc solid;
-            overflow: hidden;
-            padding: 0;
-            word-break: break-all;
-        }
-
-        /*纵向*/
-        .a4-broad-wise {
-            margin: 0 auto;
-            width: 1567px;
-            height: 1073px;
-            border: 1px #000 solid;
-            overflow: hidden;
-            padding: 0;
-            word-break: break-all;
-        }
-
-        /*打印按钮*/
-        .print {
-            position: fixed;
-            top: 1%;
-            right: 10%;
-        }
-
-        /*返回按钮*/
-        .back {
-            position: fixed;
-            top: 1%;
-            left: 10%;
-        }
-
-        /*返回按钮*/
-        .reload {
-            position: fixed;
-            top: 1%;
-            left: 12%;
-        }
-
-        .table {
-            margin-left: 20px;
-            margin-right: 20px;
-            width: 100%;
-            border: 0;
-            white-space: pre;
-            border-collapse: separate;
-            border-spacing: 0 25px;
-        }
-
-        .table-th {
-            width: 33%;
-            text-align: left;
-        }
-
-        .table-span {
-            display: -moz-inline-box;
-            display: inline-block;
-            width: 140px;
-            font-size: 28px;
-            text-align: left;
-        }
-    </style>
+    <link href="../static/css/index.css" rel="stylesheet"/>
 </head>
 <body>
 
 <a class="back" href="/">返回</a>
 <a class="reload" href="javascript:" onclick="window.location.reload()">刷新</a>
 <a class="print" href="javascript:" onclick="preview();">打印</a>
-
+<div id="all">
+{{ range $index_, $element :=.items }}
 <!--start-print-->
 <div class="container a4-end-wise">
+    <div>
+        <span style="margin-left: 10%;font-size: 25px">姓名:&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
+        <span style="margin-left: 5%;font-size: 25px">班级:&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
+        <span style="margin-left: 5%;font-size: 25px">得分:&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
+        <span style="margin-left: 5%;font-size: 25px">评分:&nbsp;☆☆☆☆☆</span>
+
+    </div>
     <table class="table">
         <tr>
-            <th class="table-th">练习一</th>
-            <th class="table-th">练习二</th>
-            <th class="table-th">练习三</th>
+            <th class="table-th"><span class="table-th-span">练习一</span></th>
+            <th class="table-th"><span class="table-th-span">练习一</span></th>
+            <th class="table-th"><span class="table-th-span">练习一</span></th>
         </tr>
         <tr>
             {{$index := 0}}
-            {{ range .items }}
+            {{ range $element }}
             {{- if (mod $index 3)}}
         </tr>
         <tr>
@@ -102,7 +44,8 @@
     </table>
 </div>
 <!--end-print-->
-
+{{end}}
+</div>
 <script>
     /**
      * [打印]
@@ -111,7 +54,7 @@
     function preview() {
         //获取当前页的html代码
         bd_html = window.document.body.innerHTML
-        window.document.body.innerHTML = document.getElementsByClassName('a4-end-wise')[0].outerHTML;
+        window.document.body.innerHTML = document.getElementById('all').outerHTML;
         window.print();
         window.document.body.innerHTML = bd_html;
     }

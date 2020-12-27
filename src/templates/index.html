@@ -28,6 +28,12 @@
             {{end}}
         </select>
         <br/>
+        <label for="page"> 页码：</label>
+        <select id="page" name="page">
+            {{range $i := .pages}}
+            <option value="{{$i}}">{{$i}}</option>
+            {{end}}
+        </select>
         <button type="submit" style="align-content: center">提交</button>
     </form>
 </div>
