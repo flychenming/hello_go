@@ -56,7 +56,13 @@ func getOp(difficulty int) string {
 
 func getOne(difficulty, max int) string {
 	var r string
-	switch difficulty {
+	var myDif int
+	if difficulty == 7 {
+		myDif = rand.Intn(difficulty) + 1
+	} else {
+		myDif = difficulty
+	}
+	switch myDif + 1 {
 	case 1, 2, 3:
 		var op = getOp(difficulty)
 		var one = rand.Intn(max)
@@ -127,7 +133,7 @@ func main() {
 		v1.GET("/", func(c *gin.Context) {
 			c.HTML(200, "index.html", gin.H{
 				"title":      "选择难易度",
-				"difficulty": map[int]string{1: "单一加", 2: "单一减", 3: "单一加减混合", 4: "2连加", 5: "2连减", 6: "2连混合"},
+				"difficulty": map[int]string{1: "单一加", 2: "单一减", 3: "单一加减混合", 4: "2连加", 5: "2连减", 6: "2连混合", 7: "混合"},
 				"max":        []int{10, 20, 30, 50, 100},
 				"no":         []int{30, 50},
 				"logic":      []int{1, 2, 3, 5, 8},
