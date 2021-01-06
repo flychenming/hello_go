@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 )
 
 func getSubNew(difficulty, max, no string) []string {
@@ -107,7 +106,6 @@ func getRandomText(max int) []string {
 	}
 	var content = strings.Split(string(data), "\n")
 	s := make([]string, 0, max)
-	rand.Seed(time.Now().Unix())
 	var c = '①'
 	var count rune = 0
 	for i := 0; i < max; i++ {
