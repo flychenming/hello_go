@@ -99,7 +99,7 @@ func getRandomText(max int) []string {
 		fmt.Println("File reading error", err)
 		return []string{}
 	}
-	var content = strings.Split(string(data), "\r\n")
+	var content = strings.Split(string(data), "\n")
 	s := make([]string, 0, max)
 	rand.Seed(time.Now().Unix())
 	var c = '①'
