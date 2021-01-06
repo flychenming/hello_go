@@ -28,6 +28,13 @@
             {{end}}
         </select>
         <br/>
+        <label for="logic"> 逻辑题量：</label>
+        <select id="logic" name="logic">
+            {{range $i := .logic}}
+            <option value="{{$i}}">{{$i}}</option>
+            {{end}}
+        </select>
+        <br/>
         <label for="page"> 页码：</label>
         <select id="page" name="page">
             {{range $i := .pages}}

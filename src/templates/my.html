@@ -13,38 +13,42 @@
 <a class="reload" href="javascript:" onclick="window.location.reload()">刷新</a>
 <a class="print" href="javascript:" onclick="preview();">打印</a>
 <div id="all">
-{{ range $index_, $element :=.items }}
-<!--start-print-->
-<div class="container a4-end-wise">
-    <div>
-        <span style="margin-left: 10%;font-size: 25px">姓名:&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
-        <span style="margin-left: 5%;font-size: 25px">班级:&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
-        <span style="margin-left: 5%;font-size: 25px">得分:&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
-        <span style="margin-left: 5%;font-size: 25px">评分:&nbsp;☆☆☆☆☆</span>
+    {{ range $index_, $element :=.items }}
+    <!--start-print-->
+    <div class="container a4-end-wise">
+        <div>
+            <span style="margin-left: 10%;font-size: 25px">姓名:&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
+            <span style="margin-left: 5%;font-size: 25px">班级:&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
+            <span style="margin-left: 5%;font-size: 25px">得分:&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
+            <span style="margin-left: 5%;font-size: 25px">评分:&nbsp;☆☆☆☆☆</span>
 
+        </div>
+        <table class="table">
+            <tr>
+                <th class="table-th"><span class="table-th-span">练习一</span></th>
+                <th class="table-th"><span class="table-th-span">练习一</span></th>
+                <th class="table-th"><span class="table-th-span">练习一</span></th>
+            </tr>
+            <tr>
+                {{$index := 0}}
+                {{ range $element.Item }}
+                {{- if (mod $index 3)}}
+            </tr>
+            <tr>
+                {{- end}}
+                <td><span class="table-span">{{.}} </span>
+                </td>
+                {{$index = (add $index 1)}}
+                {{end}}
+            </tr>
+        </table>
+        {{ range $element.Logic}}
+        <p class="div-p">{{.}}</p><br/>
+        {{end}}
     </div>
-    <table class="table">
-        <tr>
-            <th class="table-th"><span class="table-th-span">练习一</span></th>
-            <th class="table-th"><span class="table-th-span">练习一</span></th>
-            <th class="table-th"><span class="table-th-span">练习一</span></th>
-        </tr>
-        <tr>
-            {{$index := 0}}
-            {{ range $element }}
-            {{- if (mod $index 3)}}
-        </tr>
-        <tr>
-            {{- end}}
-            <td><span class="table-span">{{.}} </span>
-            </td>
-            {{$index = (add $index 1)}}
-            {{end}}
-        </tr>
-    </table>
-</div>
-<!--end-print-->
-{{end}}
+    <!--end-print-->
+    {{end}}
+
 </div>
 <script>
     /**
