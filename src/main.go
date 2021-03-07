@@ -16,7 +16,7 @@ func getSubNew(difficulty, max, no string) []string {
 	myMax, _ := strconv.Atoi(max)
 	myDifficulty, _ := strconv.Atoi(difficulty)
 	var m = make(map[string]struct{})
-	for ; ; {
+	for {
 		r := getOne(myDifficulty, myMax)
 		_, ok := m[r]
 		if !ok {
@@ -29,7 +29,7 @@ func getSubNew(difficulty, max, no string) []string {
 	s := make([]string, 0, len(m))
 	var c = '①'
 	var count rune = 0
-	for k, _ := range m {
+	for k := range m {
 		s = append(s, string(count/3+c)+" "+k)
 		count += 1
 	}
@@ -161,5 +161,7 @@ func main() {
 			"error":  "404, page not exists!",
 		})
 	})
-	r.Run(":8080")
+	if err := r.Run(":8080"); err != nil {
+		fmt.Printf("startup service failed, err:%v\n", err)
+	}
 }
