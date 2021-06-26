@@ -1,0 +1,4 @@
+下载
+{{ range $index_, $element :=.items }}
+<a href="download?file={{$element}}">{{$element}}</a>
+{{end}}

@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
+	"io"
 	"io/ioutil"
+	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -98,6 +101,34 @@ func getOne(difficulty, max int) string {
 	return r
 }
 
+func uploadFile(c *gin.Context) {
+	// FormFile方法会读取参数“upload”后面的文件名，返回值是一个File指针，和一个FileHeader指针，和一个err错误。
+	file, header, err := c.Request.FormFile("upload")
+	if err != nil {
+		c.String(http.StatusBadRequest, "Bad request")
+		return
+	}
+	// header调用Filename方法，就可以得到文件名
+	filename := header.Filename
+	fmt.Println(file, err, filename)
+
+	// 创建一个文件，文件名为filename，这里的返回值out也是一个File指针
+	out, err := os.Create(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer out.Close()
+
+	// 将file的内容拷贝到out
+	_, err = io.Copy(out, file)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	c.String(http.StatusCreated, "upload successful \n")
+}
+
 func getRandomText(max int) []string {
 	data, err := ioutil.ReadFile("src/1.txt")
 	if err != nil {
@@ -118,6 +149,13 @@ func getRandomText(max int) []string {
 type subject struct {
 	Item  []string
 	Logic []string
+}
+
+func download(c *gin.Context){
+	file := c.Query("file")
+	c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", file))//fmt.Sprintf("attachment; filename=%s", filename) Downloaded file renamed
+	c.Writer.Header().Add("Content-Type", "application/octet-stream")
+	c.File(file)
 }
 
 func main() {
@@ -153,6 +191,30 @@ func main() {
 				"items": s,
 			})
 		})
+		v1.GET("/upload", func(c *gin.Context) {
+			c.HTML(200, "upload.html", gin.H{})
+		})
+		v1.POST("/upload", uploadFile)
+
+		v1.GET("/download", download)
+
+		v1.GET("/list", func(c *gin.Context) {
+			files, err := ioutil.ReadDir(".")
+			if err != nil {
+				log.Fatal(err)
+			}
+			l := make([]string, 0)
+			for _, f := range files {
+				if !f.IsDir() && f.Name()!="Dockerfile" && f.Name()!="hello_go.iml"{
+					fmt.Println(f.Name())
+					l=append(l, f.Name())
+				}
+			}
+			c.HTML(200, "list.html", gin.H{
+				"items":l,
+			})
+		})
+
 	}
 	//定义默认路由
 	r.NoRoute(func(c *gin.Context) {
